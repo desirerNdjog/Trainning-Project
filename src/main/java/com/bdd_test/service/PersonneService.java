@@ -9,5 +9,4 @@ public interface PersonneService {
     Person create(Person person);
     Person update(Person person);
     Optional<Person> findPersonById(Long id);
-    List<Person> findAllPerson();
 }

@@ -43,8 +43,4 @@ public class PersonImpl implements PersonneService {
         return Optional.of(repository.findById(id).orElseThrow());
     }
 
-    @Override
-    public List<Person> findAllPerson() {
-        return null;
-    }
 }
