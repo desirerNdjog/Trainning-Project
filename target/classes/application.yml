@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    username: root
+    password: Juniorndjog@007
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/bdd_test
+
+  jpa:
+    hibernate.ddl-auto: update
+    generate-ddl: true
+    show-sql: true
+  application:
+    name: bdd-test
+
+server:
+  port: 8080
