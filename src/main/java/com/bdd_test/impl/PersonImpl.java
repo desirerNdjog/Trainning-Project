@@ -22,7 +22,7 @@ public class PersonImpl implements PersonneService {
         if (checkErrors.isEmpty()){
             return repository.save(person);
         }else{
-            String message = checkErrors.get(0);
+            var message = checkErrors.get(0);
             throw new ValidationException(message);
         }
     }
