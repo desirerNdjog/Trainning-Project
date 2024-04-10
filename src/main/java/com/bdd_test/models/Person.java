@@ -23,10 +23,10 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    @NotBlank(message = " firstname can't be null")
+    @NotBlank(message = " firstname can't be empty")
     private String firstName;
     @Column(nullable = false)
-    @NotBlank(message = "lastname can't be null")
+    @NotBlank(message = "lastname can't be empty")
     private String lastName;
     @Column(nullable = false)
     @NotBlank
