@@ -1,3 +1,5 @@
 
-r
-java:S1488"\Immediately return this expression instead of assigning it to the temporary variable "list".(§ý£³
+y
+java:S1488"\Immediately return this expression instead of assigning it to the temporary variable "list".(§ý£³8Ðº³·ì1
+T
+java:S1128"2Remove this unused import 'java.util.Collections'.(¢³ïÓþÿÿÿÿ8àº³·ì1

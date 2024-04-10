@@ -23,11 +23,7 @@ public class PersonDAO implements PersonDAOService {
         CriteriaQuery<Person> criteriaQuery = criteriaBuilder.createQuery(Person.class);
         Root<Person> root  = criteriaQuery.from(Person.class);
         criteriaQuery.orderBy(criteriaBuilder.desc(root.get("id")));
-        try {
-            List<Person> list = entityManager.createQuery(criteriaQuery).getResultList();
-            return list;
-        }catch (RuntimeException exception){
-            return Collections.emptyList();
-        }
+        List<Person> list = entityManager.createQuery(criteriaQuery).getResultList();
+        return list;
     }
 }
