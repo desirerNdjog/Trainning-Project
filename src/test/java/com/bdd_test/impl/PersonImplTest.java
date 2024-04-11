@@ -4,10 +4,18 @@ import com.bdd_test.config.GenericValidation;
 import com.bdd_test.exception.ValidationException;
 import com.bdd_test.models.Person;
 import com.bdd_test.repository.PersonneRepository;
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -19,11 +27,12 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 class PersonImplTest {
+    @Mock
     private PersonneRepository repository;
+    @Mock
     private GenericValidation validation;
-    @Autowired
-    private PersonImpl impl;
     private Person person;
 
     @BeforeEach
@@ -31,14 +40,13 @@ class PersonImplTest {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate date = LocalDate.parse("25/08/1997",  formatter);
         this.person = new Person(
-                1l,
+                1L,
                 "Desire Junior",
                 "NDJOG",
                 "690134110",
                 date
         );
-        this.validation = Mockito.mock(GenericValidation.class);
-        this.repository = Mockito.mock(PersonneRepository.class);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
@@ -46,7 +54,7 @@ class PersonImplTest {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate date = LocalDate.parse("25/08/1997",  formatter);
         var person = new Person(
-                1l,
+                1L,
                 "Desire Junior",
                 "NDJOG",
                 "690134110",
@@ -61,7 +69,7 @@ class PersonImplTest {
         assertThat(this.person.getLastName()).isEqualTo(person.getLastName());
         assertThat(this.person.getPhoneNumber()).isEqualTo(person.getPhoneNumber());
 
-        //verify(repository, times(1)).save(person);
+//        verify(repository, times(1)).save(this.person);
     }
 
     @Test()

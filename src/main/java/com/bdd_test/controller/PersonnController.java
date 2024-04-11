@@ -33,27 +33,15 @@ public class PersonnController{
 
     @PostMapping()
     public ResponseEntity<HttpResponse> create(@RequestBody Person person){
-        Person personn  = service.create(person);
-        if (personn != null){
             return ResponseEntity.ok().body(
                     HttpResponse.builder()
                             .dateTime(LocalDateTime.now().toString())
                             .httpStatus(HttpStatus.OK)
                             .codeStatus(HttpStatus.OK.value())
                             .message("create")
-                            .datas(Map.of("data", personn))
+                            .datas(Map.of("data", service.create(person)))
                             .build()
             );
-        }else{
-            return ResponseEntity.ok().body(
-                    HttpResponse.builder()
-                            .dateTime(LocalDateTime.now().toString())
-                            .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-                            .codeStatus(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                            .message("something when wrong")
-                            .build()
-            );
-        }
     }
 
     @PutMapping("/{id}")

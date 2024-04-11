@@ -3,7 +3,11 @@ package com.bdd_test.dao;
 import com.bdd_test.models.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -12,13 +16,14 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.*;
 
+@RunWith(MockitoJUnitRunner.class)
 class PersonDAOTest {
-
+    @Mock
     private PersonDAO dao;
 
     @BeforeEach
     void setUp() {
-        dao = Mockito.mock(PersonDAO.class);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
