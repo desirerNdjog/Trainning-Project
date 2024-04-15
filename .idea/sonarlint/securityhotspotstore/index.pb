@@ -25,8 +25,6 @@ j
 :src/main/java/com/bdd_test/exception/ExceptionHandler.java,3/4/345b8d9ffac5a1faf62e0fedef69cfa042c0313d
 m
 =src/main/java/com/bdd_test/exception/ValidationException.java,a/0/a01d6f8620e80c8d1d665abc0d056eda0e3034eb
-k
-;src/test/java/com/bdd_test/service/PersonneServiceTest.java,9/c/9c580d7487b9abdd5e9cb8cc4c4f446b7658aa8c
 ]
 -src/main/java/com/bdd_test/models/Person.java,9/3/93a96578a524d18b68099630fe7bb45ecd2c9411
 ]

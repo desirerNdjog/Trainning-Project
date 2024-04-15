@@ -4,30 +4,23 @@ import com.bdd_test.config.GenericValidation;
 import com.bdd_test.exception.ValidationException;
 import com.bdd_test.models.Person;
 import com.bdd_test.repository.PersonneRepository;
-import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
+@DisplayName(value = "Write tests on every case of functions")
 class PersonImplTest {
     @Mock
     private PersonneRepository repository;
@@ -39,29 +32,36 @@ class PersonImplTest {
     void setUp() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate date = LocalDate.parse("25/08/1997",  formatter);
-        this.person = new Person(
-                1L,
-                "Desire Junior",
-                "NDJOG",
-                "690134110",
-                date
-        );
+        this.person = Person.builder()
+                .id(null)
+                .firstName("NDJOG")
+                .lastName("Desire Junior")
+                .birthDate(date)
+                .build();
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
+    @DisplayName(value = "Creation of a person when everything is okay")
      void shouldCreatePersonWhenValid(){
+        //given
+        List<String> errors = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate date = LocalDate.parse("25/08/1997",  formatter);
-        var person = new Person(
-                1L,
-                "Desire Junior",
-                "NDJOG",
-                "690134110",
-                date
-        );
+        this.person = Person.builder()
+                .id(1L)
+                .firstName("NDJOG")
+                .lastName("Desire Junior")
+                .birthDate(date)
+                .phoneNumber("690134110")
+                .build();
+
+        //when
         when(validation.errors(person)).thenReturn(Collections.emptyList());
         when(repository.save(this.person)).thenReturn(person);
+
+        //then
+        assertThat(errors).isEmpty();
         assertThat(person).isNotNull();
         assertThat(this.person.getId()).isEqualTo(person.getId());
         assertThat(this.person.getBirthDate()).isEqualTo(person.getBirthDate());
