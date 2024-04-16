@@ -1,5 +1,7 @@
 package com.bdd_test.dao;
 
+import com.bdd_test.dto.PersonneDTO;
+import com.bdd_test.mapper.PersonDTOMapper;
 import com.bdd_test.models.Person;
 import com.bdd_test.service.PersonDAOService;
 import jakarta.persistence.EntityManager;
@@ -11,19 +13,21 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @AllArgsConstructor
 public class PersonDAO implements PersonDAOService {
     private final EntityManager entityManager;
+    private final PersonDTOMapper mapper;
 
     @Override
-    public List<Person> findAllPerson() {
+    public List<PersonneDTO> findAllPerson() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Person> criteriaQuery = criteriaBuilder.createQuery(Person.class);
         Root<Person> root  = criteriaQuery.from(Person.class);
         criteriaQuery.orderBy(criteriaBuilder.desc(root.get("id")));
         List<Person> list = entityManager.createQuery(criteriaQuery).getResultList();
-        return list;
+        return list.stream().map(mapper).toList();
     }
 }

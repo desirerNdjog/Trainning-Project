@@ -1,5 +1,6 @@
 package com.bdd_test.dao;
 
+import com.bdd_test.dto.PersonneDTO;
 import com.bdd_test.models.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,24 +29,29 @@ class PersonDAOTest {
 
     @Test
     void shouldFindAllPersonWhenValid(){
+        //Given
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate date = LocalDate.parse("25/08/1997",  formatter);
-        var person = new Person(
-                1L,
-                "Desire Junior",
-                "NDJOG",
-                "690134110",
-                date
-        );
-        var person1 = new Person(
-                2L,
-                "Desire Junior",
-                "ETUBA",
-                "690134110",
-                date
-        );
-        List<Person> list = List.of(person, person1);
+        var person = PersonneDTO.builder()
+                .firstName("Desire Junior")
+                .lastName("NDJOG")
+                .phoneNumber("690865679")
+                .date(date)
+                .email("ndjogdesire@gmail.com")
+                .build();
+        var persontwo = PersonneDTO.builder()
+                .firstName("Diland Miller")
+                .lastName("ETUBA")
+                .phoneNumber("698549032")
+                .date(date)
+                .email("etubadiland@gmail.com")
+                .build();
+        List<PersonneDTO> list = List.of(person, persontwo);
+
+        //When
         when(dao.findAllPerson()).thenReturn(list);
+
+        //Then
         assertThat(list).isNotEmpty()
                 .hasSize(2);
     }

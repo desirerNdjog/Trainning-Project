@@ -3,15 +3,15 @@ package com.bdd_test.utils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.springframework.http.HttpStatus;
 
 import java.util.Map;
 
-@Data
-@SuperBuilder
+@Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(value = JsonInclude.Include.NON_DEFAULT)
