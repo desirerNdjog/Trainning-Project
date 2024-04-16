@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +30,12 @@ import org.springframework.web.context.WebApplicationContext;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -123,6 +128,55 @@ class PersonnControllerTest extends AbstractTest {
         assertThat(response.getHttpStatus()).isEqualTo(HttpStatus.OK);
         assertThat(response.getMessage()).isEqualTo("created");
         assertThat(response.getDatas().get("data")).isNotNull();
+    }
 
+    @Test
+    @DisplayName(value = "find person by identifinat")
+    void shouldFindPersonByIdWhhenSuccess() throws Exception {
+        //Given
+        var person = PersonneDTO.builder()
+                .firstName("Desire Junior")
+                .lastName("NDJOG")
+                .email("ndjogdesire@gmail.com")
+                .phoneNumber("690134110")
+                .date(date).build();
+
+        //When
+        when(service.findPersonById(anyLong())).thenReturn(Optional.of(person));
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/person/1")
+                .contentType("application/json")
+                .accept(MediaType.APPLICATION_JSON)).andReturn();
+        var response = super.mapFromJson(result.getResponse().getContentAsString(), HttpResponse.class);
+
+        //Then
+        assertThat(response).isNotNull();
+        assertThat(response.getMessage()).isEqualTo("find");
+        assertThat(response.getHttpStatus()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getCodeStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getDatas()).isNotEmpty();
+    }
+
+    @Test
+    @DisplayName(value = "person not find")
+    void shouldNotFindPersonByIdWhenNotFoundable() throws Exception {
+        //Given
+        var person = PersonneDTO.builder()
+                .firstName("Desire Junior")
+                .lastName("NDJOG")
+                .email("ndjogdesire@gmail.com")
+                .phoneNumber("690134110")
+                .date(date).build();
+
+        //When
+        when(service.findPersonById(anyLong())).thenReturn(Optional.empty());
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/person/100")
+                .contentType("application/json")
+                .accept(MediaType.APPLICATION_JSON)).andReturn();
+        var response = super.mapFromJson(result.getResponse().getContentAsString(), HttpResponse.class);
+
+        //Then
+        assertThat(response.getMessage()).isEqualTo("person not found");
+        assertThat(response.getHttpStatus()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(response.getCodeStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
 }
