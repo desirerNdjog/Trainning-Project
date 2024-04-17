@@ -7,7 +7,6 @@ import com.bdd_test.mapper.PersonMapper;
 import com.bdd_test.repository.PersonneRepository;
 import com.bdd_test.service.PersonneService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

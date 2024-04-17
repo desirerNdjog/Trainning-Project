@@ -3,6 +3,7 @@ com/bdd_test/repository/PersonneRepository.class
 com/bdd_test/config/GenericValidation.class
 com/bdd_test/utils/HttpResponse$HttpResponseBuilder.class
 com/bdd_test/models/Person$PersonBuilder.class
+com/bdd_test/mapper/PersonMapperImpl.class
 com/bdd_test/utils/HttpResponse.class
 com/bdd_test/service/PersonDAOService.class
 com/bdd_test/exception/ExceptionHandler.class

@@ -5,15 +5,17 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
 @Table(name = "person")
-public class Person {
+public class Person implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,6 +36,5 @@ public class Person {
     @Min(message = "minimum 9 characters", value = 9L)
     private String phoneNumber;
     @Column(nullable = false)
-    @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
     private LocalDate birthDate;
 }

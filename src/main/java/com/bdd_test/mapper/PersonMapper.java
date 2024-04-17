@@ -6,18 +6,14 @@ import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 @Mapper(componentModel = "spring")
-@Configuration
 public interface PersonMapper {
-   PersonMapper MAPPER = Mappers.getMapper(PersonMapper.class);
+   PersonMapper INSTANCE = Mappers.getMapper(PersonMapper.class);
 
-   @Bean
-   @Mapping(source = "birthDate", target = "date")
+   @Mapping(source = "date", target = "birthDate")
    Person fromPersonDTOToPerson(PersonneDTO personneDTO);
-   @Bean
+
    @InheritInverseConfiguration
    PersonneDTO fromPersonToPersonDTO(Person person);
 }

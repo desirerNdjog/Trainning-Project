@@ -33,8 +33,6 @@ b
 2src/main/java/com/bdd_test/utils/HttpResponse.java,8/8/882eb627037902c372c156bee18c906ed6d34ee7
 h
 8src/main/java/com/bdd_test/service/PersonDAOService.java,b/1/b1a73420a771d082b5fd7202b12b190e2517b493
-n
->src/test/java/com/bdd_test/exception/ExceptionHandlerTest.java,5/d/5d506c9e1c185eb011502395e0b18d08a3e9c78f
 a
 1src/test/java/com/bdd_test/dao/PersonDAOTest.java,d/a/da10743dde9589dfb0f2eda1c0bf70775e5e4a2b
 p
@@ -43,7 +41,7 @@ g
 7src/test/java/com/bdd_test/controller/AbstractTest.java,2/3/23426b1f3151f861ccbaa68885cad1266904b78b
 _
 /src/main/java/com/bdd_test/dto/PersonneDTO.java,3/d/3def4b94eef7d90a260c62aa7ff1b6c6a5b42d86
-k
-;src/test/java/com/bdd_test/service/PersonneServiceTest.java,9/c/9c580d7487b9abdd5e9cb8cc4c4f446b7658aa8c
 c
 3src/main/java/com/bdd_test/mapper/PersonMapper.java,3/7/3734c377cea11aa059d928bc2d725af4d44eec53
+_
+/src/main/java/com/bdd_test/TranningProject.java,a/e/ae018f30d6ed7337d481990351d15ee0f319d4ba

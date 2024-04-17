@@ -1,8 +1,6 @@
 /Users/desirejuniorndjog/project/Trainning-Project/src/test/java/com/bdd_test/impl/PersonImplTest.java
 /Users/desirejuniorndjog/project/Trainning-Project/src/test/java/com/bdd_test/dao/PersonDAOTest.java
 /Users/desirejuniorndjog/project/Trainning-Project/src/test/java/com/bdd_test/BddApplicationTest.java
-/Users/desirejuniorndjog/project/Trainning-Project/src/test/java/com/bdd_test/exception/ExceptionHandlerTest.java
 /Users/desirejuniorndjog/project/Trainning-Project/src/test/java/stepsdefinition/PersonneFeatureTest.java
 /Users/desirejuniorndjog/project/Trainning-Project/src/test/java/com/bdd_test/controller/AbstractTest.java
-/Users/desirejuniorndjog/project/Trainning-Project/src/test/java/com/bdd_test/service/PersonneServiceTest.java
 /Users/desirejuniorndjog/project/Trainning-Project/src/test/java/com/bdd_test/controller/PersonnControllerTest.java

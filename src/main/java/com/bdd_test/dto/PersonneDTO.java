@@ -10,10 +10,8 @@ import lombok.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-@Getter
-@Setter
+@Data
 @Builder
-@AllArgsConstructor
 public class PersonneDTO implements Serializable {
     private Long id;
     @NotEmpty(message = "firstname is empty")
@@ -30,6 +28,5 @@ public class PersonneDTO implements Serializable {
     @NotBlank(message = "lastname is empty")
     @Min(message = "minimum 9 characters", value = 9L)
     private String phoneNumber;
-    @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
     private LocalDate date;
 }
