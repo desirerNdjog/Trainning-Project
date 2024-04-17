@@ -1,9 +1,12 @@
 package com.bdd_test.impl;
 
 import com.bdd_test.config.GenericValidation;
+import com.bdd_test.dto.PersonneDTO;
 import com.bdd_test.exception.ValidationException;
+import com.bdd_test.mapper.PersonMapperImpl;
 import com.bdd_test.models.Person;
 import com.bdd_test.repository.PersonneRepository;
+import com.bdd_test.service.PersonneService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,51 +29,50 @@ import static org.mockito.Mockito.*;
 class PersonImplTest {
     @Mock
     private PersonneRepository repository;
-    @Mock
-    private GenericValidation validation;
-    private Person person;
+    private PersonneService personneService;
 
     @BeforeEach
     void setUp() {
+        MockitoAnnotations.openMocks(this);
+        personneService = new PersonImpl(repository, new GenericValidation(), new PersonMapperImpl());
+    }
+
+    private PersonneDTO buildPerson() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate date = LocalDate.parse("25/08/1997",  formatter);
-        this.person = Person.builder()
-                .id(null)
-                .firstName("NDJOG")
-                .lastName("Desire Junior")
-                .birthDate(date)
-                .build();
-        MockitoAnnotations.openMocks(this);
+        return PersonneDTO.builder()
+            .id(null)
+            .firstName("NDJOG")
+            .lastName("Desire Junior")
+            .date(date)
+            .build();
     }
 
     @Test
-    @DisplayName(value = "Creation of a person when everything is okay")
-     void shouldCreatePersonWhenValid(){
+    @DisplayName(value = "Validete and create person DTO")
+     void given_personDto_for_create_should_validate_and_create_person(){
         //given
-        List<String> errors = new ArrayList<>();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate date = LocalDate.parse("25/08/1997",  formatter);
-        this.person = Person.builder()
-                .id(1L)
-                .firstName("NDJOG")
-                .lastName("Desire Junior")
-                .birthDate(date)
-                .phoneNumber("690134110")
-                .build();
+        PersonneDTO personDto = buildPerson();
+        var person = Person.builder()
+            .id(null)
+            .firstName("Desire Ngono")
+            .lastName("")
+            .email("ndjogdesire@gmail.com")
+            .birthDate(LocalDate.parse("25/08/1997"))
+            .phoneNumber("689543854").build();
+        when(repository.save(any(Person.class))).thenReturn(person);
 
         //when
-        when(validation.errors(person)).thenReturn(Collections.emptyList());
-        when(repository.save(this.person)).thenReturn(person);
+        PersonneDTO personExpected = personneService.create(personDto);
 
         //then
-        assertThat(errors).isEmpty();
-        assertThat(person).isNotNull();
-        assertThat(this.person.getId()).isEqualTo(person.getId());
-        assertThat(this.person.getEmail()).isEqualTo(person.getEmail());
-        assertThat(this.person.getBirthDate()).isEqualTo(person.getBirthDate());
-        assertThat(this.person.getFirstName()).isEqualTo(person.getFirstName());
-        assertThat(this.person.getLastName()).isEqualTo(person.getLastName());
-        assertThat(this.person.getPhoneNumber()).isEqualTo(person.getPhoneNumber());
+        assertThat(personExpected).isNotNull();
+        assertThat(personExpected.getId()).isEqualTo(person.getId());
+        assertThat(personExpected.getEmail()).isEqualTo(person.getEmail());
+        assertThat(personExpected.getDate()).isEqualTo(person.getBirthDate());
+        assertThat(personExpected.getFirstName()).isEqualTo(person.getFirstName());
+        assertThat(personExpected.getLastName()).isEqualTo(person.getLastName());
+        assertThat(personExpected.getPhoneNumber()).isEqualTo(person.getPhoneNumber());
     }
 
     @Test()
