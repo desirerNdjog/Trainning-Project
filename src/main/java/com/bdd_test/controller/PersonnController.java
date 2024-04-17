@@ -1,7 +1,6 @@
 package com.bdd_test.controller;
 
 import com.bdd_test.dto.PersonneDTO;
-import com.bdd_test.models.Person;
 import com.bdd_test.service.PersonDAOService;
 import com.bdd_test.service.PersonneService;
 import com.bdd_test.utils.HttpResponse;

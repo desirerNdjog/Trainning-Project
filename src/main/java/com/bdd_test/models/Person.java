@@ -36,5 +36,6 @@ public class Person implements Serializable {
     @Min(message = "minimum 9 characters", value = 9L)
     private String phoneNumber;
     @Column(nullable = false)
+    @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
     private LocalDate birthDate;
 }
