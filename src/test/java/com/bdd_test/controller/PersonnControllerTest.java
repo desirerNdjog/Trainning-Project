@@ -32,7 +32,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -115,7 +114,7 @@ class PersonnControllerTest extends AbstractTest {
         var jsonPerson = super.mapToJson(person);
 
         //When
-        when(service.create(any(Person.class))).thenReturn(personDTO);
+        when(service.create(any(PersonneDTO.class))).thenReturn(personDTO);
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/person")
                         .contentType("application/json")
                         .accept(MediaType.APPLICATION_JSON)

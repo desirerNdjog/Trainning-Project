@@ -36,14 +36,14 @@ public class PersonnController{
     }
 
     @PostMapping()
-    public ResponseEntity<HttpResponse> create(@RequestBody @Valid Person person){
+    public ResponseEntity<HttpResponse> create(@RequestBody @Valid PersonneDTO personneDTO){
         return ResponseEntity.ok().body(
                 HttpResponse.builder()
                         .dateTime(LocalDateTime.now().toString())
                         .message("created")
                         .codeStatus(HttpStatus.OK.value())
                         .httpStatus(HttpStatus.OK)
-                        .datas(Map.of("data", service.create(person)))
+                        .datas(Map.of("data", service.create(personneDTO)))
                         .build()
         );
     }

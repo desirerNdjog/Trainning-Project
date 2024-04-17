@@ -2,7 +2,6 @@ package com.bdd_test.service;
 
 import com.bdd_test.dto.PersonneDTO;
 import com.bdd_test.models.Person;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,9 +18,9 @@ import java.util.Optional;
 
 @DisplayName(value = "Test fonctions present in service")
 class PersonneServiceTest {
-    @Autowired
     private PersonneService service;
 
+    @Autowired
     public PersonneServiceTest(PersonneService service) {
         this.service = service;
     }
@@ -32,11 +31,11 @@ class PersonneServiceTest {
         //Given
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate date = LocalDate.parse("25/08/1997", formatter);
-        var person = Person.builder()
+        var person = PersonneDTO.builder()
                 .firstName("Desire Junior")
                 .lastName("NDJOG")
                 .phoneNumber("6904357843")
-                .birthDate(date)
+                .date(date)
                 .email("ndjogdesire@gmail.com")
                 .build();
 
@@ -48,7 +47,7 @@ class PersonneServiceTest {
         assertThat(person.getFirstName()).isEqualTo(personDTO.getFirstName());
         assertThat(person.getLastName()).isEqualTo(personDTO.getLastName());
         assertThat(person.getPhoneNumber()).isEqualTo(personDTO.getPhoneNumber());
-        assertThat(person.getBirthDate()).isEqualTo(personDTO.getDate());
+        assertThat(person.getDate()).isEqualTo(personDTO.getDate());
         assertThat(person.getEmail()).isEqualTo(personDTO.getEmail());
 
         verify(service, times(1)).create(person);
@@ -60,12 +59,12 @@ class PersonneServiceTest {
         //Given
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate date = LocalDate.parse("25/08/1997", formatter);
-        var person = Person.builder()
+        var person = PersonneDTO.builder()
                 .id(1L)
                 .firstName("Desire Junior")
                 .lastName("NDJOG")
                 .phoneNumber("6904357843")
-                .birthDate(date)
+                .date(date)
                 .email("ndjogdesire@gmail.com")
                 .build();
 
@@ -77,7 +76,7 @@ class PersonneServiceTest {
         assertThat(person.getFirstName()).isEqualTo(personDTO.getFirstName());
         assertThat(person.getLastName()).isEqualTo(personDTO.getLastName());
         assertThat(person.getPhoneNumber()).isEqualTo(personDTO.getPhoneNumber());
-        assertThat(person.getBirthDate()).isEqualTo(personDTO.getDate());
+        assertThat(person.getDate()).isEqualTo(personDTO.getDate());
         assertThat(person.getEmail()).isEqualTo(personDTO.getEmail());
 
         verify(service, times(1)).update(person);

@@ -14,8 +14,8 @@ import java.time.LocalDate;
 @Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class PersonneDTO implements Serializable {
+    private Long id;
     @NotEmpty(message = "firstname is empty")
     @NotBlank(message = "firstname is blanck")
     private String firstName;
