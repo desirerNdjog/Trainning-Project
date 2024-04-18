@@ -4,6 +4,7 @@ import com.bdd_test.config.GenericValidation;
 import com.bdd_test.dto.PersonneDTO;
 import com.bdd_test.exception.ValidationException;
 import com.bdd_test.mapper.PersonMapper;
+import com.bdd_test.models.Person;
 import com.bdd_test.repository.PersonneRepository;
 import com.bdd_test.service.PersonneService;
 import lombok.AllArgsConstructor;
@@ -46,8 +47,8 @@ public class PersonImpl implements PersonneService {
 
     @Override
     public Optional<PersonneDTO> findPersonById(Long id) {
-        var response = repository.findById(id);
-        return Optional.of(mapper.fromPersonToPersonDTO(response.get()));
+        Optional<Person> person = repository.findById(id);
+        return person.map(mapper::fromPersonToPersonDTO);
     }
 
 }

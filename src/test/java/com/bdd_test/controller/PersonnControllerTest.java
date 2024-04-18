@@ -5,13 +5,9 @@ import com.bdd_test.models.Person;
 import com.bdd_test.service.PersonDAOService;
 import com.bdd_test.service.PersonneService;
 import com.bdd_test.utils.HttpResponse;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +34,6 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-@Slf4j
 @WebMvcTest(PersonnController.class)
 @ContextConfiguration(classes = {PersonnController.class})
 @RunWith(SpringRunner.class)
@@ -49,14 +44,17 @@ class PersonnControllerTest extends AbstractTest {
     private PersonDAOService dao;
     @MockBean
     private PersonneService service;
-    private LocalDate date;
 
     @BeforeEach
     void setUp(WebApplicationContext context) {
-        DateTimeFormatter dateTimeFormatter  = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        this.date = LocalDate.parse("25/08/1997", dateTimeFormatter);
         MockitoAnnotations.openMocks(this);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+    }
+
+    private LocalDate date(){
+        LocalDate date;
+        DateTimeFormatter dateTimeFormatter  = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return date = LocalDate.parse("25/08/1997", dateTimeFormatter);
     }
 
     @Test
@@ -67,20 +65,20 @@ class PersonnControllerTest extends AbstractTest {
                 .firstName("Desire Junior")
                 .lastName("NDJOG")
                 .phoneNumber("6904357843")
-                .date(date)
+                .date(this.date())
                 .email("ndjogdesire@gmail.com")
                 .build();
         var personTwwo = PersonneDTO.builder()
                 .firstName("Miller")
                 .lastName("ETUBA")
                 .phoneNumber("6904357843")
-                .date(date)
+                .date(this.date())
                 .email("ndjogdesire@gmail.com")
                 .build();
         List<PersonneDTO> list = List.of(person, personTwwo);
-
-        //When
         when(dao.findAllPerson()).thenReturn(list);
+
+        //when
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/person")
                         .contentType("application/json")
                         .accept(MediaType.APPLICATION_JSON))
@@ -102,14 +100,14 @@ class PersonnControllerTest extends AbstractTest {
                 .lastName("NDJOG")
                 .email("ndjogdesire@gmail.com")
                 .phoneNumber("690134110")
-                .birthDate(date).build();
+                .birthDate(this.date()).build();
 
         var personDTO = PersonneDTO.builder()
                 .firstName("Desire Junior")
                 .lastName("NDJOG")
                 .email("ndjogdesire@gmail.com")
                 .phoneNumber("690134110")
-                .date(date).build();
+                .date(this.date()).build();
 
         var jsonPerson = super.mapToJson(person);
 
@@ -138,10 +136,10 @@ class PersonnControllerTest extends AbstractTest {
                 .lastName("NDJOG")
                 .email("ndjogdesire@gmail.com")
                 .phoneNumber("690134110")
-                .date(date).build();
+                .date(this.date()).build();
+        when(service.findPersonById(anyLong())).thenReturn(Optional.of(person));
 
         //When
-        when(service.findPersonById(anyLong())).thenReturn(Optional.of(person));
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/person/1")
                 .contentType("application/json")
                 .accept(MediaType.APPLICATION_JSON)).andReturn();
@@ -164,10 +162,10 @@ class PersonnControllerTest extends AbstractTest {
                 .lastName("NDJOG")
                 .email("ndjogdesire@gmail.com")
                 .phoneNumber("690134110")
-                .date(date).build();
+                .date(this.date()).build();
+        when(service.findPersonById(anyLong())).thenReturn(Optional.empty());
 
         //When
-        when(service.findPersonById(anyLong())).thenReturn(Optional.empty());
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/person/100")
                 .contentType("application/json")
                 .accept(MediaType.APPLICATION_JSON)).andReturn();

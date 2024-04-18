@@ -17,15 +17,13 @@ public class PersonneDTO implements Serializable {
     @NotEmpty(message = "firstname is empty")
     @NotBlank(message = "firstname is blanck")
     private String firstName;
-    @NotEmpty(message = "last is empty")
-    @NotBlank(message = "lastname is empty")
+    @NotEmpty(message = "lastname is empty")
+    @NotBlank(message = "lastname is blank")
     private String lastName;
     @Email(message = "email not conformed")
     @NotEmpty(message = "email is empty")
-    @NotBlank(message = "email is blanck")
+    @NotBlank(message = "email is blank")
     private String email;
-    @NotEmpty(message = "last is empty")
-    @NotBlank(message = "lastname is empty")
     @Min(message = "minimum 9 characters", value = 9L)
     private String phoneNumber;
     @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)

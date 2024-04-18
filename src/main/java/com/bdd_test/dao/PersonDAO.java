@@ -16,11 +16,11 @@ import java.util.List;
 @Repository
 @AllArgsConstructor
 public class PersonDAO implements PersonDAOService {
-    private final EntityManager entityManager;
-    private final PersonMapper mapper;
+    private final  EntityManager entityManager;
+    private final  PersonMapper mapper;
 
     @Override
-    public List<PersonneDTO> findAllPerson() {
+    public List<PersonneDTO> findAllPerson(){
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Person> criteriaQuery = criteriaBuilder.createQuery(Person.class);
         Root<Person> root  = criteriaQuery.from(Person.class);
