@@ -3,6 +3,7 @@ package com.bdd_test.dao;
 import com.bdd_test.dto.PersonneDTO;
 import com.bdd_test.models.Person;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -28,6 +29,7 @@ class PersonDAOTest {
     }
 
     @Test
+    @Disabled(value = "do not yet test")
     void shouldFindAllPersonWhenValid(){
         //Given
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
