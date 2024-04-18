@@ -1,7 +1,12 @@
 package com.bdd_test.dao;
 
 import com.bdd_test.dto.PersonneDTO;
+import com.bdd_test.mapper.PersonMapperImpl;
 import com.bdd_test.models.Person;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -15,46 +20,66 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.*;
 
 @RunWith(MockitoJUnitRunner.class)
 class PersonDAOTest {
+
     @Mock
-    private PersonDAO dao;
+    EntityManager entityManager;
+    @Mock
+    CriteriaBuilder criteriaBuilder;
+    @Mock
+    CriteriaQuery<Person> criteriaQuery;
+    @Mock
+    Root<Person> root;
+    private PersonDAO personDAO;
+    private PersonMapperImpl mapper = new PersonMapperImpl();
 
     @BeforeEach
     void setUp() {
+        personDAO = new PersonDAO(entityManager, new PersonMapperImpl());
         MockitoAnnotations.openMocks(this);
+    }
+
+    private LocalDate date(){
+        LocalDate date;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return LocalDate.parse("25/08/1997",  formatter);
     }
 
     @Test
     @Disabled(value = "do not yet test")
     void shouldFindAllPersonWhenValid(){
         //Given
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate date = LocalDate.parse("25/08/1997",  formatter);
-        var person = PersonneDTO.builder()
+        Person person = Person.builder()
                 .firstName("Desire Junior")
                 .lastName("NDJOG")
                 .phoneNumber("690865679")
-                .date(date)
+                .birthDate(date())
                 .email("ndjogdesire@gmail.com")
                 .build();
-        var persontwo = PersonneDTO.builder()
+        Person personTwo = Person.builder()
                 .firstName("Diland Miller")
                 .lastName("ETUBA")
                 .phoneNumber("698549032")
-                .date(date)
+                .birthDate(date())
                 .email("etubadiland@gmail.com")
                 .build();
-        List<PersonneDTO> list = List.of(person, persontwo);
+        List<Person> list = List.of(person, personTwo);
+        when(entityManager.getCriteriaBuilder()).thenReturn(criteriaBuilder);
+        when(criteriaBuilder.createQuery(Person.class)).thenReturn(criteriaQuery);
+        when(criteriaQuery.from(Person.class)).thenReturn(root);
+        when(entityManager.createQuery(anyString()).getResultList()).thenReturn(list);
+        List<PersonneDTO> personneDTOS = list.stream().map(mapper::fromPersonToPersonDTO).toList();
 
         //When
-        when(dao.findAllPerson()).thenReturn(list);
+        List<PersonneDTO> personList = personDAO.findAllPerson();
 
         //Then
-        assertThat(list).isNotEmpty()
+        assertThat(personList).isNotEmpty()
                 .hasSize(2);
     }
 }
