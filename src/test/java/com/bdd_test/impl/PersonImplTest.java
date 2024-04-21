@@ -1,13 +1,17 @@
 package com.bdd_test.impl;
 
 import com.bdd_test.config.GenericValidation;
+import com.bdd_test.dto.PersonneDTO;
 import com.bdd_test.exception.ValidationException;
+import com.bdd_test.mapper.PersonMapper;
+import com.bdd_test.mapper.PersonMapperImpl;
 import com.bdd_test.models.Person;
 import com.bdd_test.repository.PersonneRepository;
+import com.bdd_test.service.PersonneService;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -15,190 +19,175 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.when;
 
 @Slf4j
 @RunWith(MockitoJUnitRunner.class)
 @DisplayName(value = "Write tests on every case of functions")
 class PersonImplTest {
-    @Mock
-    private PersonneRepository repository;
-    @Mock
-    private GenericValidation validation;
-    private Person person;
+  @Mock
+  private PersonneRepository repository;
+  private PersonneService personImpl;
 
-    @BeforeEach
-    void setUp() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate date = LocalDate.parse("25/08/1997",  formatter);
-        this.person = Person.builder()
-                .id(null)
-                .firstName("NDJOG")
-                .lastName("Desire Junior")
-                .birthDate(date)
-                .build();
-        MockitoAnnotations.openMocks(this);
-    }
+  @BeforeEach
+  void setUp() {
+    MockitoAnnotations.openMocks(this);
+    personImpl = new PersonImpl(repository, new GenericValidation(), PersonMapper.INSTANCE);
+  }
 
-    @Test
-    @DisplayName(value = "Creation of a person when everything is okay")
-     void shouldCreatePersonWhenValid(){
-        //given
-        List<String> errors = new ArrayList<>();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate date = LocalDate.parse("25/08/1997",  formatter);
-        this.person = Person.builder()
-                .id(1L)
-                .firstName("NDJOG")
-                .lastName("Desire Junior")
-                .birthDate(date)
-                .phoneNumber("690134110")
-                .build();
+  private LocalDate date() {
+    LocalDate date;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    return date = LocalDate.parse("25/08/1997", formatter);
+  }
 
-        //when
-        when(validation.errors(person)).thenReturn(Collections.emptyList());
-        when(repository.save(this.person)).thenReturn(person);
+  private PersonneDTO buildPerson() {
+    return PersonneDTO.builder()
+        .id(null)
+        .firstName("Desire Ngono")
+        .lastName("NDJOG")
+        .email("ndjogdesire@gmail.com")
+        .date("25/08/1997")
+        .phoneNumber("689543854").build();
+  }
 
-        //then
-        assertThat(errors).isEmpty();
-        assertThat(person).isNotNull();
-        assertThat(this.person.getId()).isEqualTo(person.getId());
-        assertThat(this.person.getEmail()).isEqualTo(person.getEmail());
-        assertThat(this.person.getBirthDate()).isEqualTo(person.getBirthDate());
-        assertThat(this.person.getFirstName()).isEqualTo(person.getFirstName());
-        assertThat(this.person.getLastName()).isEqualTo(person.getLastName());
-        assertThat(this.person.getPhoneNumber()).isEqualTo(person.getPhoneNumber());
-    }
+  @Test
+  @DisplayName(value = "valide and create person when valid")
+  void shouldGivePersonDTOAndValidateAndCreateAndReturPersonDTO() {
+    //given
+    PersonneDTO personDto = buildPerson();
+    Person person = Person.builder()
+        .id(null)
+        .firstName("Desire Ngono")
+        .lastName("NDJOG")
+        .email("ndjogdesire@gmail.com")
+        .birthDate(date())
+        .phoneNumber("689543854").build();
+    when(repository.save(any(Person.class))).thenReturn(person);
 
-    @Test()
-    @DisplayName(value = "No creation of person when data no valid")
-    void shouldNotCreatePersonWhenNotValid() throws ValidationException{
-        //Given
-        List<String> errors = List.of("lastname can't be empty");
-        var message = "lastname can't be empty";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate date = LocalDate.parse("25/08/1997",  formatter);
-        var person = Person.builder()
-                .id(null)
-                .firstName("Desire Ngono")
-                .lastName("")
-                .email("ndjogdesire@gmail.com")
-                .birthDate(date)
-                .phoneNumber("689543854").build();
+    //when
+    PersonneDTO personExpected = personImpl.create(personDto);
 
-        //When
-        when(validation.errors(person)).thenReturn(errors);
+    //then
+    assertThat(personExpected).isNotNull();
+    assertThat(personExpected.getFirstName()).isEqualTo(person.getFirstName());
+    assertThat(personExpected.getLastName()).isEqualTo(person.getLastName());
+    assertThat(personExpected.getEmail()).isEqualTo(person.getEmail());
+    assertThat(personExpected.getPhoneNumber()).isEqualTo(person.getPhoneNumber());
+  }
 
-        //Then
-        assertThat(errors.get(0)).isNotNull();
-        assertThat(person.getFirstName()).isNotBlank();
-        assertThat(person.getLastName()).isBlank();
-        assertThat(person.getEmail()).isNotEmpty();
-        assertThat(person.getBirthDate()).isNotNull();
-        assertThat(person.getId()).isNull();
-        assertThat(errors.get(0)).isEqualTo("lastname can't be empty");
-    }
+  @Test
+  @DisplayName(value = "given person dto without lastname should throw validation exception")
+  void given_person_dto_without_lastname_for_create_should_throw_validation_exception() {
+    //Given
+    PersonneDTO person = PersonneDTO.builder()
+        .id(null)
+        .firstName("Desire Ngono")
+        .email("ndjogdesire@gmail.com")
+        .date("25/08/1997")
+        .phoneNumber("689543854").build();
 
-    @Test
-    @DisplayName(value = "update person when everythins is okay")
-    void shouldUpdatePersonWhenValid(){
-        //Given
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate date = LocalDate.parse("25/08/1997",  formatter);
-        var person = Person.builder()
-                .id(1L)
-                .firstName("Desire Junior")
-                .lastName("NDJOG")
-                .email("ndjogdesire@gmail.com")
-                .birthDate(date)
-                .phoneNumber("689543854").build();
+    //When
+    ValidationException exception = assertThrows(ValidationException.class, () -> personImpl.create(person));
 
-        //When
-        when(validation.errors(person)).thenReturn(Collections.emptyList());
-        when(repository.save(person)).thenReturn(person);
+    //Then
+    assertThat(exception).isInstanceOf(ValidationException.class);
+    assertThat(exception.getMessage()).isEqualTo("last is empty");
+  }
 
-        //Then
-        assertThat(person).isNotNull();
-        assertThat(person.getId()).isNotNull();
-        assertThat(person.getBirthDate()).isNotNull();
-        assertThat(person.getFirstName()).isNotNull();
-        assertThat(person.getLastName()).isNotNull();
-        assertThat(person.getPhoneNumber()).isNotNull();
-    }
+  @Test
+  @DisplayName(value = "update person when everything is okay")
+  void given_person_dto_for_update_should_updated_and_return_person_dto() {
+    //Given
+    PersonneDTO personneDTO = buildPerson();
+    var person = Person.builder()
+        .id(1L)
+        .firstName("Desire Ngono")
+        .lastName("NDJOG")
+        .email("ndjogdesire@gmail.com")
+        .birthDate(date())
+        .phoneNumber("689543854").build();
+    when(repository.save(any(Person.class))).thenReturn(person);
 
-    @Test
-    @DisplayName(value = "don't update person when data are not good")
-    void shouldNotUpdatePersonWhenNotValid(){
-        //Given
-        List<String> errors = List.of("lastname can't be empty");
-        var message = "lastname can't be empty";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate date = LocalDate.parse("25/08/1997",  formatter);
-        var person = Person.builder()
-                .id(1L)
-                .firstName("Desire Junior")
-                .lastName(null)
-                .email("ndjogdesire@gmail.com")
-                .birthDate(date)
-                .phoneNumber("689543854").build();
+    //When
+    PersonneDTO personExpected = personImpl.update(personneDTO);
 
-        //When
-        when(validation.errors(person)).thenReturn(errors);
+    //Then
+    assertThat(personExpected).isNotNull();
+    assertThat(personExpected.getFirstName()).isEqualTo(personneDTO.getFirstName());
+    assertThat(personExpected.getLastName()).isEqualTo(personneDTO.getLastName());
+    assertThat(personExpected.getEmail()).isEqualTo(personneDTO.getEmail());
+    assertThat(personExpected.getPhoneNumber()).isEqualTo(personneDTO.getPhoneNumber());
+  }
 
-        //Then
-        assertThat(errors.get(0)).isNotNull();
-        assertThat(person.getLastName()).isNull();
-        assertThat(person.getId()).isNotNull();
-        assertThat(errors.get(0)).isEqualTo("lastname can't be empty");
-    }
+  @Test
+  @DisplayName(value = "don't update person when data are not good")
+  void shouldNotUpdatePersonWhenNotValid() {
+    //Given
+    var person = Person.builder()
+        .id(1L)
+        .firstName("Desire Junior")
+        .lastName("")
+        .email("ndjogdesire@gmail.com")
+        .birthDate(date())
+        .phoneNumber("689543854").build();
 
-    @DisplayName(value = "find personne when is ok")
-    @ParameterizedTest(name = "identifiant: {0} search person value")
-    @ValueSource(longs = {1L})
-    void shouldFindPersonByIdWhenValid(long identifiant){
-        //Given
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate date = LocalDate.parse("25/08/1997",  formatter);
-        var person = Person.builder()
-                .id(1L)
-                .firstName("")
-                .lastName("NDJOG")
-                .email("ndjogdesire@gmail.com")
-                .birthDate(date)
-                .phoneNumber("689543854").build();
-        Optional<Person> optionalPerson = Optional.of(person);
+    //When
+    PersonneDTO personneDTO = personImpl.update(buildPerson());
 
-        //When
-        when(repository.findById(identifiant)).thenReturn(optionalPerson);
+    //Then
+    assertThat(personneDTO).isNull();
+  }
 
-        //Then
-        assertThat(optionalPerson).isNotNull();
-        assertThat(person.getId()).isEqualTo(optionalPerson.get().getId());
-    }
+  @DisplayName(value = "find personne when is ok")
+  @Test()
+  void shouldFindPersonByIdWhenValid() {
+    //Given
+    Long id = 1L;
+    Person person = Person.builder()
+        .id(1L)
+        .firstName("Desire Junior")
+        .lastName("NDJOG")
+        .email("ndjogdesire@gmail.com")
+        .birthDate(date())
+        .phoneNumber("689543854").build();
+    when(repository.findById(anyLong())).thenReturn(Optional.of(person));
 
-    @DisplayName(value = "not find personne when is not ok and throws exception")
-    @ParameterizedTest(name = "identifiant: {0} search person value")
-    @ValueSource(longs = {1L, 3L})
-    void shouldNotFindPersonByIdWhenNotValid(long identifiant) throws NoSuchElementException {
-        //Given
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate date = LocalDate.parse("25/08/1997",  formatter);
-        var person = Person.builder()
-                .id(2L)
-                .firstName("")
-                .lastName("NDJOG")
-                .email("ndjogdesire@gmail.com")
-                .birthDate(date)
-                .phoneNumber("689543854").build();
-        Optional<Person> optionalPerson = Optional.empty();
+    //When
+    Optional<PersonneDTO> optionalPerson = personImpl.findPersonById(id);
 
-        //When
-        when(repository.findById(identifiant)).thenThrow(NoSuchElementException.class);
+    //Then
+    assertThat(optionalPerson).isPresent();
+    assertThat(optionalPerson.get().getFirstName()).isEqualTo(person.getFirstName());
+    assertThat(optionalPerson.get().getLastName()).isEqualTo(person.getLastName());
+    assertThat(optionalPerson.get().getEmail()).isEqualTo(person.getEmail());
+    assertThat(optionalPerson.get().getPhoneNumber()).isEqualTo(person.getPhoneNumber());
+  }
 
-        //Then
-        assertThat(optionalPerson).isEmpty();
-    }
+  @DisplayName(value = "not find personne when is not ok and throws exception")
+  @Test()
+  void shouldNotFindPersonByIdWhenNotValid() {
+    //Given
+    Long id = 100L;
+    Person person = Person.builder()
+        .id(2L)
+        .firstName("")
+        .lastName("NDJOG")
+        .email("ndjogdesire@gmail.com")
+        .birthDate(date())
+        .phoneNumber("689543854").build();
+    when(repository.findById(anyLong())).thenReturn(Optional.empty());
+
+    //When
+    Optional<PersonneDTO> optionalPerson = personImpl.findPersonById(id);
+
+    //Then
+    assertThat(optionalPerson).isEmpty();
+  }
 }

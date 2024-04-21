@@ -16,4 +16,3 @@ com/bdd_test/controller/PersonnController.class
 com/bdd_test/exception/ValidationException.class
 com/bdd_test/dao/PersonDAO.class
 com/bdd_test/impl/PersonImpl.class
-com/bdd_test/BddTestApplication.class

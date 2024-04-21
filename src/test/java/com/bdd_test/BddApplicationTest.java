@@ -1,9 +1,8 @@
 package com.bdd_test;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootApplication
-public class BddApplicationTest {
-    
+@SpringBootTest
+ class BddApplicationTest {
+
 }
