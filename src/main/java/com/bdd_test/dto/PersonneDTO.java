@@ -1,6 +1,5 @@
 package com.bdd_test.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -8,7 +7,6 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 @Data
 @Builder
