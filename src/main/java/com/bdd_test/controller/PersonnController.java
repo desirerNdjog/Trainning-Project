@@ -16,7 +16,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/api/v1/person")
+@RequestMapping("/person")
 @AllArgsConstructor
 public class PersonnController{
     private final PersonDAOService dao;

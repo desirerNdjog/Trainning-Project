@@ -11,7 +11,7 @@ import org.mapstruct.factory.Mappers;
 public interface PersonMapper {
    PersonMapper INSTANCE = Mappers.getMapper(PersonMapper.class);
 
-   @Mapping(source = "date", target = "birthDate")
+   @Mapping(source = "date", target = "birthDate", dateFormat = "dd/MM/yyyy")
    Person fromPersonDTOToPerson(PersonneDTO personneDTO);
 
    @InheritInverseConfiguration

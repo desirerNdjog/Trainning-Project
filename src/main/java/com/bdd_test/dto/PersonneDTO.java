@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 @Data
 @Builder
-public class PersonneDTO implements Serializable {
+public class PersonneDTO implements Serializable{
     private Long id;
     @NotEmpty(message = "firstname is empty")
     @NotBlank(message = "firstname is blanck")
@@ -28,6 +28,5 @@ public class PersonneDTO implements Serializable {
     @NotBlank(message = "lastname is empty")
     @Min(message = "minimum 9 characters", value = 9L)
     private String phoneNumber;
-    @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
-    private LocalDate date;
+    private String date;
 }

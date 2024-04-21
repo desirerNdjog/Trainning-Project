@@ -38,4 +38,5 @@ public class Person implements Serializable {
     @Column(nullable = false)
     @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
     private LocalDate birthDate;
+
 }
