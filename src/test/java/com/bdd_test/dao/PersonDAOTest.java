@@ -9,12 +9,16 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -25,6 +29,9 @@ import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.*;
 
 @RunWith(MockitoJUnitRunner.class)
+@DataJpaTest
+@ContextConfiguration(classes = {PersonDAOTest.class})
+@EnableJpaRepositories
 class PersonDAOTest {
 
     @Mock
@@ -51,7 +58,7 @@ class PersonDAOTest {
     }
 
     @Test
-    @Disabled(value = "do not yet test")
+    @DisplayName(value = "fetch all users")
     void shouldFindAllPersonWhenValid(){
         //Given
         Person person = Person.builder()

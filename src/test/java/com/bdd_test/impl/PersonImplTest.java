@@ -6,18 +6,12 @@ import com.bdd_test.exception.ValidationException;
 import com.bdd_test.mapper.PersonMapperImpl;
 import com.bdd_test.models.Person;
 import com.bdd_test.repository.PersonneRepository;
-import com.bdd_test.service.PersonneService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.test.context.ContextConfiguration;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -28,10 +22,7 @@ import static org.mockito.Mockito.*;
 
 @Slf4j
 @RunWith(MockitoJUnitRunner.class)
-@DataJpaTest
 @DisplayName(value = "Write tests on every case of functions")
-@ContextConfiguration(classes = {PersonImplTest.class})
-@EnableJpaRepositories
 class PersonImplTest {
     @Mock
     private PersonneRepository repository;
@@ -55,13 +46,13 @@ class PersonImplTest {
                 .firstName("Desire Ngono")
                 .lastName("NDJOG")
                 .email("ndjogdesire@gmail.com")
-                .date(date())
+                .date("25/08/1997")
                 .phoneNumber("689543854").build();
     }
 
     @Test
     @DisplayName(value = "valide and create person when valid")
-     void given_personDto_for_create_should_validate_and_create_person(){
+     void shouldGivePersonDTOAndValidateAndCreateAndReturPersonDTO(){
         //given
         PersonneDTO personDto = buildPerson();
         Person person = Person.builder()

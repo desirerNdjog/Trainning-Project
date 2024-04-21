@@ -51,7 +51,7 @@ class PersonImplIT {
                 .firstName("Desire Ngono")
                 .lastName("NDJOG")
                 .email("ndjogdesire@gmail.com")
-                .date(date())
+                .date("25/08/1997")
                 .phoneNumber("689543854").build();
     }
 
