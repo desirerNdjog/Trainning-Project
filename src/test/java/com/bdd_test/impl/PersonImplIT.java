@@ -22,7 +22,6 @@ import static org.mockito.Mockito.when;
 
 class PersonImplIT {
 
-    @Autowired
      private PersonneRepository repository;
 
      private  PersonImpl personImpl = new PersonImpl(repository, new GenericValidation(), new PersonMapperImpl());

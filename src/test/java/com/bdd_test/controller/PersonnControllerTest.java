@@ -4,7 +4,6 @@ import com.bdd_test.dto.PersonneDTO;
 import com.bdd_test.service.PersonDAOService;
 import com.bdd_test.service.PersonneService;
 import com.bdd_test.utils.HttpResponse;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -23,8 +21,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +31,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @WebMvcTest(PersonnController.class)
-@ContextConfiguration(classes = {PersonnController.class})
 @RunWith(SpringRunner.class)
 class PersonnControllerTest extends AbstractTest {
     @Autowired
@@ -44,19 +39,16 @@ class PersonnControllerTest extends AbstractTest {
     private PersonDAOService dao;
     @MockBean
     private PersonneService service;
-    private LocalDate date;
 
     @BeforeEach
     void setUp(WebApplicationContext context) {
-        DateTimeFormatter dateTimeFormatter  = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        this.date = LocalDate.parse("25/08/1997", dateTimeFormatter);
         MockitoAnnotations.openMocks(this);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
 
     @Test
-    @DisplayName(value = "return list of all persons")
-    void shouldFindAllNoPaginageWithSuccess() throws Exception{
+    @DisplayName(value = "given a list persondt and return a list of persondto when valid")
+    void given_list_persondto_and_return_list_persondto() throws Exception{
         //Given
         PersonneDTO person = PersonneDTO.builder()
                 .id(1L)
@@ -89,8 +81,8 @@ class PersonnControllerTest extends AbstractTest {
     }
 
     @Test
-    @DisplayName(value = "create a person with success")
-    void shouldCreatePersonWhenSuccess() throws Exception{
+    @DisplayName(value = "given a valid persondto and return persondto")
+    void given_a_valid_persondto_and_return_persondto() throws Exception{
         //Given
         PersonneDTO personDTO = PersonneDTO.builder()
                 .id(null)
@@ -127,10 +119,10 @@ class PersonnControllerTest extends AbstractTest {
     }
 
     @Test
-    @DisplayName(value = "find person by identifinat")
-    void shouldFindPersonByIdWhhenSuccess() throws Exception {
+    @DisplayName(value = "given persondto id and return persondto")
+    void given_persondto_id_and_return_persondto() throws Exception {
         //Given
-        var person = PersonneDTO.builder()
+        PersonneDTO person = PersonneDTO.builder()
                 .firstName("Desire Junior")
                 .lastName("NDJOG")
                 .email("ndjogdesire@gmail.com")
@@ -153,10 +145,10 @@ class PersonnControllerTest extends AbstractTest {
     }
 
     @Test
-    @DisplayName(value = "person not find")
-    void shouldNotFindPersonByIdWhenNotFoundable() throws Exception {
+    @DisplayName(value = "given a persondto id and return empty option persondto")
+    void given_a_persondto_id_and_return_empty_optional_persondto() throws Exception {
         //Given
-        var person = PersonneDTO.builder()
+        PersonneDTO person = PersonneDTO.builder()
                 .firstName("Desire Junior")
                 .lastName("NDJOG")
                 .email("ndjogdesire@gmail.com")

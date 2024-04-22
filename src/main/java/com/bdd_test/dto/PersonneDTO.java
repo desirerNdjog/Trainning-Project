@@ -22,8 +22,8 @@ public class PersonneDTO implements Serializable{
     @NotEmpty(message = "email is empty")
     @NotBlank(message = "email is blanck")
     private String email;
-    @NotEmpty(message = "last is empty")
-    @NotBlank(message = "lastname is empty")
+    @NotEmpty(message = "phone number is empty")
+    @NotBlank(message = "phone number is empty")
     @Min(message = "minimum 9 characters", value = 9L)
     private String phoneNumber;
     private String date;
