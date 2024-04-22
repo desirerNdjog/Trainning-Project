@@ -15,7 +15,7 @@ public class PersonneDTO implements Serializable{
     @NotEmpty(message = "firstname is empty")
     @NotBlank(message = "firstname is blanck")
     private String firstName;
-    @NotEmpty(message = "last is empty")
+    @NotEmpty(message = "lastname is empty")
     @NotBlank(message = "lastname is empty")
     private String lastName;
     @Email(message = "email not conformed")
