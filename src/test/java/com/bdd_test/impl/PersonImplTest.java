@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-@DisplayName(value = "Write tests on every case of functions")
 class PersonImplTest {
     @Mock
     private PersonneRepository repository;
