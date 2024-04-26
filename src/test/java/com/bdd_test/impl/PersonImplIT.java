@@ -3,16 +3,15 @@ package com.bdd_test.impl;
 import com.bdd_test.config.GenericValidation;
 import com.bdd_test.dto.PersonneDTO;
 import com.bdd_test.exception.ValidationException;
-import com.bdd_test.mapper.PersonMapperImpl;
+import com.bdd_test.mapper.PersonMapper;
 import com.bdd_test.models.Person;
 import com.bdd_test.repository.PersonneRepository;
+import com.bdd_test.service.PersonneService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import utils.DateBuilder;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,19 +23,14 @@ class PersonImplIT {
 
      private PersonneRepository repository;
 
-     private  PersonImpl personImpl = new PersonImpl(repository, new GenericValidation(), new PersonMapperImpl());
-
-
-     private LocalDate date(){
-        LocalDate date;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return date = LocalDate.parse("25/08/1997",  formatter);
-    }
+     private PersonneService personImpl = new PersonImpl(
+             repository, new GenericValidation(), PersonMapper.INSTANCE
+     );
 
     private PersonneDTO buildPerson() {
         return PersonneDTO.builder()
                 .id(null)
-                .firstName("Desire Ngono")
+                .firstName("Desire Junior")
                 .lastName("NDJOG")
                 .email("ndjogdesire@gmail.com")
                 .date("25/08/1997")
@@ -44,8 +38,8 @@ class PersonImplIT {
     }
 
     @Test
-    @DisplayName(value = "valide and create person when valid")
-    void shouldGicenPersonDTAndReturnPersonDTOWhenCreatinPassWithSuccess(){
+    @DisplayName(value = "given persondto validate, create and return persondto")
+    void given_persondto_valide_and_create_and_return_persondto(){
         //given
         PersonneDTO personDto = buildPerson();
 
@@ -71,7 +65,7 @@ class PersonImplIT {
                     .firstName("Desire Ngono")
                     .lastName("")
                     .email("ndjogdesire@gmail.com")
-                    .birthDate(date())
+                    .birthDate(DateBuilder.date("25/08/1997"))
                     .phoneNumber("689543854").build();
 
             //When
@@ -98,7 +92,7 @@ class PersonImplIT {
                 .firstName("Desire Junior")
                 .lastName("NDJOG")
                 .email("ndjogdesire@gmail.com")
-                .birthDate(date())
+                .birthDate(DateBuilder.date("25/08/1997"))
                 .phoneNumber("689543854").build();
         when(repository.save(any(Person.class))).thenReturn(person);
 
@@ -124,7 +118,7 @@ class PersonImplIT {
                     .firstName("Desire Junior")
                     .lastName("")
                     .email("ndjogdesire@gmail.com")
-                    .birthDate(date())
+                    .birthDate(DateBuilder.date("25/08/1997"))
                     .phoneNumber("689543854").build();
 
             //When
@@ -148,7 +142,7 @@ class PersonImplIT {
                 .firstName("Desire Junior")
                 .lastName("NDJOG")
                 .email("ndjogdesire@gmail.com")
-                .birthDate(date())
+                .birthDate(DateBuilder.date("25/08/1997"))
                 .phoneNumber("689543854").build();
         when(repository.findById(anyLong())).thenReturn(Optional.of(person));
 
@@ -156,7 +150,7 @@ class PersonImplIT {
         Optional<PersonneDTO> optionalPerson = personImpl.findPersonById(id);
 
         //Then
-        assertThat(optionalPerson).isNotNull();
+        assertThat(optionalPerson).isNotEmpty();
         assertThat(optionalPerson.get().getFirstName()).isEqualTo(person.getFirstName());
         assertThat(optionalPerson.get().getLastName()).isEqualTo(person.getLastName());
         assertThat(optionalPerson.get().getEmail()).isEqualTo(person.getEmail());
@@ -174,7 +168,7 @@ class PersonImplIT {
                 .firstName("")
                 .lastName("NDJOG")
                 .email("ndjogdesire@gmail.com")
-                .birthDate(date())
+                .birthDate(DateBuilder.date("25/08/1997"))
                 .phoneNumber("689543854").build();
         when(repository.findById(anyLong())).thenReturn(Optional.empty());
 
