@@ -4,17 +4,12 @@ import com.bdd_test.config.GenericValidation;
 import com.bdd_test.dto.PersonneDTO;
 import com.bdd_test.exception.ValidationException;
 import com.bdd_test.mapper.PersonMapper;
-import com.bdd_test.mapper.PersonMapperImpl;
 import com.bdd_test.models.Person;
 import com.bdd_test.repository.PersonneRepository;
 import com.bdd_test.service.PersonneService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 import utils.DateBuilder;
 
 import java.util.Optional;

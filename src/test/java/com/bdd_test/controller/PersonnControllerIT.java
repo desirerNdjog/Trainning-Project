@@ -7,14 +7,12 @@ import com.bdd_test.utils.HttpResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -27,12 +25,11 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-@WebMvcTest(PersonnController.class)
-@RunWith(SpringRunner.class)
-class PersonnControllerTest extends AbstractTest {
+@WebMvcTest(controllers = PersonnController.class)
+class PersonnControllerIT extends AbstractTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
@@ -78,6 +75,8 @@ class PersonnControllerTest extends AbstractTest {
         assertThat(response.getCodeStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getHttpStatus()).isEqualTo(HttpStatus.OK);
         assertThat(response.getDatas().get("data")).isNotNull();
+
+        verify(dao, times(1)).findAllPerson();
     }
 
     @Test
