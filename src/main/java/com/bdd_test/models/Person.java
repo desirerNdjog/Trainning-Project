@@ -25,14 +25,14 @@ public class Person implements Serializable {
     private String email;
     @Column(nullable = false)
     @NotEmpty(message = "firstname is empty")
-    @NotBlank(message = "firstname is blanck")
+    @NotBlank(message = "firstname is blank")
     private String firstName;
     @Column(nullable = false)
-    @NotEmpty(message = "last is empty")
+    @NotEmpty(message = "lastname is empty")
     @NotBlank(message = "lastname is empty")
     private String lastName;
     @Column(nullable = false)
-    @NotBlank(message = "phoneNumber is empty")
+    @NotBlank(message = "phone number is empty")
     @Min(message = "minimum 9 characters", value = 9L)
     private String phoneNumber;
     @Column(nullable = false)
