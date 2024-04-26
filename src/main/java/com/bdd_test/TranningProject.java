@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BddTestApplication {
+public class TranningProject {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BddTestApplication.class, args);
+		SpringApplication.run(TranningProject.class, args);
 	}
 }

@@ -1,13 +1,11 @@
 package com.bdd_test.service;
 
-import com.bdd_test.models.Person;
+import com.bdd_test.dto.PersonneDTO;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface PersonneService {
-    Person create(Person person);
-    Person update(Person person);
-    Optional<Person> findPersonById(Long id);
-    List<Person> findAllPerson();
+    PersonneDTO create(PersonneDTO personneDTO);
+    PersonneDTO update(PersonneDTO person);
+    Optional<PersonneDTO> findPersonById(Long id);
 }

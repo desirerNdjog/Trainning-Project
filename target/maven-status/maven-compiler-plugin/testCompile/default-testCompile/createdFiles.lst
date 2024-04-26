@@ -1,2 +1,6 @@
-stepsdefinition/PersonneStep.class
+com/bdd_test/dao/PersonDAOTest.class
+com/bdd_test/controller/PersonnControllerTest.class
+com/bdd_test/impl/PersonImplTest.class
+com/bdd_test/controller/AbstractTest.class
+stepsdefinition/PersonneFeatureTest.class
 com/bdd_test/BddApplicationTest.class

@@ -1,8 +1,6 @@
 package com.bdd_test.config;
 
-import com.bdd_test.models.Person;
 import jakarta.validation.*;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
