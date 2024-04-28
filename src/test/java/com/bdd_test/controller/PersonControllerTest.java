@@ -126,7 +126,7 @@ public class PersonControllerTest {
 
         //then
         assertThat(expectedResponse).isNotNull();
-        assertThat(expectedResponse.getBody().getDatas()).hasFieldOrPropertyWithValue("data", Optional.of(personneDTO));
+        assertThat(Objects.requireNonNull(expectedResponse.getBody()).getDatas()).hasFieldOrPropertyWithValue("data", Optional.of(personneDTO));
     }
 
     @Test

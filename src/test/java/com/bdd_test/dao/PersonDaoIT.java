@@ -14,9 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import utils.DateBuilder;
 
 import java.util.List;
@@ -44,8 +42,8 @@ class PersonDaoIT {
     }
 
     @Test
-    @DisplayName(value = "given list of student and return list of persondto when valid")
-    void giveAListOfPersonDTOAndReturnAListOfPersonDTO(){
+    @DisplayName(value = "fetch list persondto")
+    void giveAListOfPersondtoAndReturnAListOfPersondto(){
         //Given
         Person person = Person.builder()
                 .firstName("Desire Junior")

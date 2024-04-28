@@ -44,8 +44,8 @@ class PersonImplTest {
     }
 
     @Test
-    @DisplayName(value = "given persondto validate, create and return persondto")
-     void givenPersonDTOValidAndCreateAndReturnPersonDTO(){
+    @DisplayName(value = "create and return persondto")
+     void givenPersondtoValidAndCreateAndReturnPersondto(){
         //given
         PersonneDTO personDto = buildPerson();
         Person person = Person.builder()

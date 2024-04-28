@@ -1,9 +1,8 @@
-/Users/desirejuniorndjog/project/trainning/src/test/java/com/bdd_test/impl/PersonImplIT.java
+/Users/desirejuniorndjog/project/trainning/src/test/java/com/bdd_test/controller/PersonnControllerIT.java
+/Users/desirejuniorndjog/project/trainning/src/test/java/com/bdd_test/controller/PersonControllerTest.java
 /Users/desirejuniorndjog/project/trainning/src/test/java/com/bdd_test/dao/PersonDaoIT.java
 /Users/desirejuniorndjog/project/trainning/src/test/java/stepsdefinition/PersonneFeatureTest.java
 /Users/desirejuniorndjog/project/trainning/src/test/java/com/bdd_test/impl/PersonImplTest.java
-/Users/desirejuniorndjog/project/trainning/src/test/java/com/bdd_test/controller/PersonnControllerTest.java
 /Users/desirejuniorndjog/project/trainning/src/test/java/com/bdd_test/controller/AbstractTest.java
 /Users/desirejuniorndjog/project/trainning/src/test/java/utils/DateBuilder.java
-/Users/desirejuniorndjog/project/trainning/src/test/java/com/bdd_test/dao/PersonDAOTest.java
 /Users/desirejuniorndjog/project/trainning/src/test/java/com/bdd_test/BddApplicationTest.java
