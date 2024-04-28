@@ -149,7 +149,7 @@ public class PersonControllerTest {
 
         //then
         assertThat(expectedResponse).isNotNull();
-        assertThat(expectedResponse.getBody().getMessage()).isEqualTo("person not found");
+        assertThat(Objects.requireNonNull(expectedResponse.getBody()).getMessage()).isEqualTo("person not found");
     }
 
 }
