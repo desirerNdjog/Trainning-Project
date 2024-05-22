@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import utils.DateBuilder;
+import com.bdd_test.utils.DateBuilder;
 
 import java.util.*;
 

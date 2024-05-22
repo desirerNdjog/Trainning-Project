@@ -1,4 +1,4 @@
-package utils;
+package com.bdd_test.utils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

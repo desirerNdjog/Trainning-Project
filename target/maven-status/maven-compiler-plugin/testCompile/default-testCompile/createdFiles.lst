@@ -1,4 +1,8 @@
+com/bdd_test/controller/PersonnControllerIT.class
+utils/DateBuilder.class
+com/bdd_test/dao/PersonDaoIT.class
 com/bdd_test/impl/PersonImplTest.class
 com/bdd_test/controller/AbstractTest.class
-stepsdefinition/PersonneFeatureTest.class
+com/bdd_test/steps/PersonFeatureStep.class
+com/bdd_test/controller/PersonControllerTest.class
 com/bdd_test/BddApplicationTest.class
