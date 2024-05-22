@@ -1,7 +1,7 @@
 package com.bdd_test.mapper;
 
 import com.bdd_test.dto.PersonneDTO;
-import com.bdd_test.models.Person;
+import com.bdd_test.domain.models.Person;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.annotation.processing.Generated;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-04-23T00:50:16+0400",
+    date = "2024-05-17T00:52:15+0400",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.6 (Oracle Corporation)"
 )
 @Component

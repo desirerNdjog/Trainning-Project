@@ -4,7 +4,7 @@ import com.bdd_test.config.GenericValidation;
 import com.bdd_test.dto.PersonneDTO;
 import com.bdd_test.exception.ValidationException;
 import com.bdd_test.mapper.PersonMapperImpl;
-import com.bdd_test.models.Person;
+import com.bdd_test.domain.models.Person;
 import com.bdd_test.repository.PersonneRepository;
 import com.bdd_test.service.PersonneService;
 import org.junit.jupiter.api.*;
@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import utils.DateBuilder;
+import com.bdd_test.utils.DateBuilder;
 
 import java.util.*;
 
@@ -44,8 +44,8 @@ class PersonImplTest {
     }
 
     @Test
-    @DisplayName(value = "given persondto validate, create and return persondto")
-     void givenPersonDTOValidAndCreateAndReturnPersonDTO(){
+    @DisplayName(value = "create and return persondto")
+     void givenPersondtoValidAndCreateAndReturnPersondto(){
         //given
         PersonneDTO personDto = buildPerson();
         Person person = Person.builder()

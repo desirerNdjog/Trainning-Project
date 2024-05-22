@@ -2,7 +2,7 @@ package com.bdd_test.dao;
 
 import com.bdd_test.dto.PersonneDTO;
 import com.bdd_test.mapper.PersonMapper;
-import com.bdd_test.models.Person;
+import com.bdd_test.domain.models.Person;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -14,10 +14,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import utils.DateBuilder;
+import com.bdd_test.utils.DateBuilder;
 
 import java.util.List;
 
@@ -30,6 +30,7 @@ import static org.mockito.Mockito.when;
  * @project: trainning
  */
 @DataJpaTest
+@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 class PersonDaoIT {
     @Mock
     EntityManager entityManager;
@@ -44,8 +45,8 @@ class PersonDaoIT {
     }
 
     @Test
-    @DisplayName(value = "given list of student and return list of persondto when valid")
-    void giveAListOfPersonDTOAndReturnAListOfPersonDTO(){
+    @DisplayName(value = "fetch list persondto")
+    void giveAListOfPersondtoAndReturnAListOfPersondto(){
         //Given
         Person person = Person.builder()
                 .firstName("Desire Junior")

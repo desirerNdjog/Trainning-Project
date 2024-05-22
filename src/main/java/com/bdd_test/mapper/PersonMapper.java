@@ -1,7 +1,7 @@
 package com.bdd_test.mapper;
 
 import com.bdd_test.dto.PersonneDTO;
-import com.bdd_test.models.Person;
+import com.bdd_test.domain.models.Person;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

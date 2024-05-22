@@ -1,7 +1,5 @@
-package com.bdd_test.models;
+package com.bdd_test.domain;
 
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
 import lombok.Data;
 
 import java.io.Serializable;

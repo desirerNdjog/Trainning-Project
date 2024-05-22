@@ -1,4 +1,5 @@
 com/bdd_test/service/PersonneService.class
+com/bdd_test/models/BasicEntity.class
 com/bdd_test/repository/PersonneRepository.class
 com/bdd_test/config/GenericValidation.class
 com/bdd_test/utils/HttpResponse$HttpResponseBuilder.class
@@ -13,6 +14,7 @@ com/bdd_test/dto/PersonneDTO.class
 com/bdd_test/dto/PersonneDTO$PersonneDTOBuilder.class
 com/bdd_test/exception/ApiException.class
 com/bdd_test/controller/PersonnController.class
+com/bdd_test/TranningProject.class
 com/bdd_test/exception/ValidationException.class
 com/bdd_test/dao/PersonDAO.class
 com/bdd_test/impl/PersonImpl.class
