@@ -1,4 +1,4 @@
-package com.bdd_test.models;
+package com.bdd_test.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;

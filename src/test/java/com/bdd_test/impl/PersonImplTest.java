@@ -4,7 +4,7 @@ import com.bdd_test.config.GenericValidation;
 import com.bdd_test.dto.PersonneDTO;
 import com.bdd_test.exception.ValidationException;
 import com.bdd_test.mapper.PersonMapperImpl;
-import com.bdd_test.models.Person;
+import com.bdd_test.domain.models.Person;
 import com.bdd_test.repository.PersonneRepository;
 import com.bdd_test.service.PersonneService;
 import org.junit.jupiter.api.*;

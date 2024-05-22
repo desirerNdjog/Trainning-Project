@@ -1,7 +1,7 @@
 package com.bdd_test.mapper;
 
 import com.bdd_test.dto.PersonneDTO;
-import com.bdd_test.models.Person;
+import com.bdd_test.domain.models.Person;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.annotation.processing.Generated;

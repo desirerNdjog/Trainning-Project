@@ -4,11 +4,10 @@ import com.bdd_test.config.GenericValidation;
 import com.bdd_test.dto.PersonneDTO;
 import com.bdd_test.exception.ValidationException;
 import com.bdd_test.mapper.PersonMapper;
-import com.bdd_test.models.Person;
+import com.bdd_test.domain.models.Person;
 import com.bdd_test.repository.PersonneRepository;
 import com.bdd_test.service.PersonneService;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
